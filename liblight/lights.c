@@ -269,30 +269,6 @@ static int set_light_attention(struct light_device_t* dev,
     return 0;
 }
 
-static int set_light_battery(struct light_device_t* dev,
-        struct light_state_t const* state)
-{
-    pthread_mutex_lock(&g_lock);
-
-    struct light_state_t* finalState =
-        (struct light_state_t*) malloc(sizeof(struct light_state_t));
-
-    memcpy(finalState, state, sizeof(struct light_state_t));
-
-    if (state->flashOnMS == 0 && state->flashOffMS == 0) {
-        // HACK: The hammerhead LED driver cannot do steady lights.
-        finalState->flashOnMS = 99999999;
-        finalState->flashOffMS = 1;
-        finalState->flashMode = LIGHT_FLASH_TIMED;
-    }
-    set_light_locked(finalState, 2);
-    pthread_mutex_unlock(&g_lock);
-
-    free(finalState);
-
-    return 0;
-}
-
 
 /** Close the lights device */
 static int close_lights(struct light_device_t *dev)
@@ -356,6 +332,6 @@ struct hw_module_t HAL_MODULE_INFO_SYM = {
     .version_minor = 0,
     .id = LIGHTS_HARDWARE_MODULE_ID,
     .name = "lights Module",
-    .author = "Google, Inc., OmniROM",
+    .author = "Google, Inc.",
     .methods = &lights_module_methods,
 };
