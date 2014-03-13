@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#Use prebuilt kernel
+PDK_PLATFORM_ZIP_PRODUCT_BINARIES := $(KERNEL_OUT)/vmlinux.bz2
 
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -97,10 +99,6 @@ BOARD_HAL_STATIC_LIBRARIES := libdumpstate.hammerhead
 
 BOARD_SEPOLICY_DIRS := \
        device/lge/hammerhead/sepolicy
-
-# Define kernel config for inline building
-TARGET_KERNEL_CONFIG := cyanogenmod_hammerhead_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/hammerhead
 
 # The list below is order dependent
 BOARD_SEPOLICY_UNION := \
